@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}StudentSpace{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+{% if user.is_authenticated %}
+<div class="app-shell">
+    <aside class="sidebar">
+        <div class="brand">StudentSpace</div>
+        <nav class="sidebar-nav">
+            <a href="{% url 'dashboard' %}" class="{% if section == 'dashboard' %}active{% endif %}">Басты бет</a>
+            <a href="{% url 'grades' %}" class="{% if section == 'grades' %}active{% endif %}">Бағалар</a>
+            {% if user.role == 'teacher' or user.role == 'admin' %}
+            <a href="{% url 'teacher_journal' %}" class="{% if section == 'teacher_journal' %}active{% endif %}">Мұғалім журналы</a>
+            {% endif %}
+            {% if user.role == 'admin' %}
+            <a href="{% url 'audit_log' %}" class="{% if section == 'audit_log' %}active{% endif %}">Аудит журналы</a>
+            {% endif %}
+            <a href="{% url 'profile' %}" class="{% if section == 'profile' %}active{% endif %}">Профиль</a>
+            <a href="{% url 'logout' %}">Шығу</a>
+        </nav>
+    </aside>
+    <main class="content-area">
+        <header class="topbar">
+            <div class="search-box"><input type="text" placeholder="Іздеу..." disabled></div>
+            <div class="profile-mini">
+                <span class="badge badge-info">{{ user.get_role_display }}</span>
+                <a href="{% url 'profile' %}" class="ghost-button">Профиль</a>
+            </div>
+        </header>
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="message {{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% block content %}{% endblock %}
+    </main>
+</div>
+{% else %}
+<div class="auth-page">
+    <div class="auth-wrap">
+        {% if messages %}
+        <div class="messages auth-messages">
+            {% for message in messages %}
+            <div class="message {{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% block auth_content %}{% endblock %}
+    </div>
+</div>
+{% endif %}
+</body>
+</html>

@@ -1,0 +1,28 @@
+{% extends 'journal/base.html' %}
+{% block title %}Кіру | StudentSpace{% endblock %}
+{% block auth_content %}
+<div class="auth-card">
+    <div class="auth-brand">Электрондық журнал</div>
+    <h1>Кіру</h1>
+    <p class="subtitle">Студенттердің үлгерімін бақылау жүйесі</p>
+    <form method="post" class="form-stack">
+        {% csrf_token %}
+        <label>Рөл</label>
+        {{ form.role }}
+        <label>Логин</label>
+        {{ form.username }}
+        <label>Құпиясөз</label>
+        {{ form.password }}
+        {% if form.non_field_errors %}
+        <div class="form-errors">{{ form.non_field_errors }}</div>
+        {% endif %}
+        <div class="auth-actions auth-actions-column">
+            <button class="primary-button full-btn" type="submit">Кіру</button>
+            <div class="auth-links-row">
+                <a href="{% url 'register' %}" class="outline-button small-auth-btn">Тіркелу</a>
+                <a href="{% url 'forgot_password' %}" class="text-link">Құпиясөзді ұмыттыңыз ба?</a>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
