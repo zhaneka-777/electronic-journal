@@ -25,8 +25,28 @@
 python3 -m venv venv
 source venv/bin/activate
 
+# Windows
+.venv\Scripts\activate
+# Linux / macOS
+source .venv/bin/activate
+
 # Django-ны орнату
 pip install django
 
+pip install -r requirements.txt
+python manage.py makemigrations
+python manage.py migrate
+
 # Серверді іске қосу
 python manage.py runserver
+ ⁠
+## Негізгі беттер
+•⁠  ⁠⁠ / ⁠ — login
+•⁠  ⁠⁠ /register/ ⁠ — тіркелу
+•⁠  ⁠⁠ /dashboard/ ⁠ — рөлге сай басты бет
+•⁠  ⁠⁠ /grades/ ⁠ — бағалар
+•⁠  ⁠⁠ /teacher-journal/ ⁠ — мұғалім журналы
+•⁠  ⁠⁠ /audit-log/ ⁠ — аудит журналы
+•⁠  ⁠⁠ /profile/ ⁠ — профиль
+•⁠  ⁠⁠ /export/excel/ ⁠ — Excel экспорт
+•⁠  ⁠⁠ /export/pdf/ ⁠ — PDF экспорт
